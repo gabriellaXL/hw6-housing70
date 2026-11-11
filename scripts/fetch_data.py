@@ -147,20 +147,20 @@ def main():
         check = dict(checked_at=datetime.now(timezone.utc).isoformat(), latest_official_month=latest,
                      latest_local_month=max(sources) if sources else None,
                      recent_sources=dict(sorted(found.items())))
-        (DATA / 'latest-release-check.json').write_text(json.dumps(check, ensure_ascii=False, indent=2), encoding='utf-8')
+        (DATA / 'latest-release-check.json').write_text(json.dumps(check, ensure_ascii=False, indent=2), encoding='utf-8', newline='')
         assert latest == max(sources), 'New official data available: rerun with --discover'
         metadata_path = DATA / 'metadata.json'
         if metadata_path.exists():
             metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
             metadata['release_checked_at'] = check['checked_at']
-            metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding='utf-8')
+            metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding='utf-8', newline='')
         print(json.dumps(check, ensure_ascii=False), flush=True)
         return
     if args.discover or not sources:
         with cf.ThreadPoolExecutor(max_workers=6) as pool:
             for found in pool.map(discover, range(args.pages)):
                 sources.update(found)
-        source_path.write_text(json.dumps(dict(sorted(sources.items())), ensure_ascii=False, indent=2), encoding='utf-8')
+        source_path.write_text(json.dumps(dict(sorted(sources.items())), ensure_ascii=False, indent=2), encoding='utf-8', newline='')
         print(f'Discovered {len(sources)} months', flush=True)
     assert sources, 'No official releases found'
     rows, provenance = [], []
@@ -173,7 +173,7 @@ def main():
     metadata = {**checks, 'checked_at': timestamp, 'latest_month': checks['months'][-1],
                 'baseline_change': '2026年1月起，使用2025年作为新一轮对比基期，各城市基本分类权数有所调整。仅展示官方环比和同比，不拼接定基指数。'}
     for name, obj in [('housing.json', rows), ('metadata.json', metadata), ('sources.json', provenance), ('validation.json', checks)]:
-        (DATA / name).write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding='utf-8')
+        (DATA / name).write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding='utf-8', newline='')
     print(json.dumps({k:v for k,v in checks.items() if k not in ('cities','months')}, ensure_ascii=False), flush=True)
 
 
