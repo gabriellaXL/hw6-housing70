@@ -71,7 +71,7 @@ try {
   await page.locator('#reset').click();
   check('reset restores all defaults',await page.evaluate(()=>housingApp.state.month==='2026-09'&&housingApp.state.metric==='yoy'&&housingApp.state.compare.join(',')==='北京,上海,广州,深圳'&&!housingApp.state.selected.size&&!housingApp.state.focus));
   // All referenced sources and static assets must return successfully.
-  for(const asset of ['styles.css','app.js','vendor/d3.v7.min.js','data/housing.json','data/metadata.json','data/sources.json','report.md','report.html']) {
+  for(const asset of ['styles.css','app.js','explore.js','vendor/d3.v7.min.js','data/housing.json','data/metadata.json','data/sources.json','report.md','report.html']) {
     const r=await page.request.get(new URL(asset,base).href);check(`asset ${asset}`,r.ok());
   }
   await page.setViewportSize({width:390,height:844});

@@ -47,7 +47,7 @@
     const gapMax = d3.max(months.flatMap(m => cities.map(c => Math.abs(pair(c,m,metric).gap ?? 0)))) || 1;
     limits[metric] = {domain, valueMax: d3.max(values,Math.abs)||1, gapMax};
   }
-  let timer, noticeTimer;
+  let timer, noticeTimer, explorer;
   const metricName = () => state.metric === 'yoy' ? '同比' : '环比';
   const current = () => cities.map(c => pair(c,state.month,state.metric));
   function notice(message) {
@@ -68,6 +68,8 @@
     const p = new URLSearchParams({m:state.month, metric:state.metric,c:state.compare.join(','),heat:state.heat,sort:state.sort});
     if(state.selected.size) p.set('s',[...state.selected].join(','));
     if(state.focus) p.set('focus','1');
+    if(state.unusual) p.set('unusual',state.unusual);
+    if(state.detailCity) {p.set('detail',state.detailCity);p.set('detailType',state.detailType);p.set('zoom',state.detailZoom?'1':'0');}
     history.replaceState(null,'',`${location.pathname}?${p}${location.hash}`);
   }
   function hover(city) {
@@ -94,6 +96,7 @@
   function setSelected(names) {
     state.selected = new Set(names);
     renderSelection(); renderHeat(); syncURL();
+    explorer?.render();
   }
   function renderSelection() {
     const rows = current(), has = state.selected.size>0;
@@ -196,7 +199,8 @@
       const x=d3.scaleLinear().domain([0,months.length-1]).range([margin.left,w-margin.right]);
       const y=d3.scaleLinear().domain(limits[state.metric].domain).range([h-margin.bottom,margin.top]);
       const d=pair(city,state.month,state.metric);
-      card.select('.trend-title').html(`<h3>${city}</h3><span>新 ${fmt(d.n)} / 旧 ${fmt(d.r)}%</span>`);
+      card.select('.trend-title').html(`<h3>${city}</h3><span>新 ${fmt(d.n)} / 旧 ${fmt(d.r)}%</span><button class="text-button trend-inspect" aria-label="放大查看${city}">放大 ↗</button>`);
+      card.select('.trend-inspect').on('click',()=>explorer.openCity(city));
       const svg=card.select('svg').attr('viewBox',`0 0 ${w} ${h}`).attr('role','img').attr('aria-label',`${city}新房和二手房${metricName()}趋势`);
       svg.selectAll('*').remove();
       svg.append('g').attr('class','grid').attr('transform',`translate(${margin.left},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(w-margin.left-margin.right)).tickFormat(''));
@@ -263,6 +267,7 @@
     document.querySelectorAll('[data-heat]').forEach(el=>el.setAttribute('aria-pressed',el.dataset.heat===state.heat));
     $('#sort').value=state.sort;$('#focus').checked=state.focus;
     renderScatter(animate);renderSelection();renderCompareControls();renderTrends();renderHeat();syncURL();
+    explorer?.render();
   }
   $('#month').max=months.length-1;
   $('#month').addEventListener('input',e=>setMonth(months[+e.target.value]));
@@ -284,6 +289,7 @@
   $('#clear-brush').onclick=()=>{state.selected.clear();render();};
   $('#reset').onclick=()=>{
     stop();Object.assign(state,{month:months.at(-1),metric:'yoy',compare:[...defaults],selected:new Set(),heat:'gap',sort:'gap',focus:false,hovered:null});
+    explorer?.reset();
     $('#city-search').value='';$('#city-results').replaceChildren();hideTip();render();notice('已恢复最新月份、同比与默认四城。');
   };
   $('#share').onclick=async()=>{
@@ -321,5 +327,6 @@
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
   // Narrow inspection surface for repeatable data and browser validation.
   window.housingApp={state,months,cities,limits,get,pair,current,setMonth,addCity,setSelected,stop};
+  explorer=window.initExplore({state,months,cities,limits,get,pair,current,setMonth,stop,syncURL,fmt,valid,showTip,hideTip});
   render();
 })();

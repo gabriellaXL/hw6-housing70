@@ -8,6 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%231c5557'/%3E%3Cpath d='M9 29V17l8-7 8 7v12M26 29V21l5-4 4 4v8' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script defer src="vendor/d3.v7.min.js"></script>
+  <script defer src="explore.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -30,6 +31,13 @@
     <div class="toolbar-actions"><button id="share" class="button">复制当前视图链接 ↗</button><button id="reset" class="text-button">全部重置</button></div>
   </section>
   <div id="status" role="status" aria-live="polite"></div>
+  <section class="panel unusual-panel" id="unusual-section" aria-labelledby="unusual-heading">
+    <div class="panel-top"><div><div class="section-kicker">从大趋势里寻找例外</div><h2 id="unusual-heading">哪些城市走得不一样？</h2></div><span class="tag" id="unusual-period"></span></div>
+    <p class="instruction">先选一种“不同”，再点城市卡片放大查看。每座城市都有具体入选原因，放大后可与其余城市比较。</p>
+    <div class="segmented unusual-tabs" role="group" aria-label="寻找不同走势"><button data-unusual="minority" aria-pressed="true">逆着多数方向</button><button data-unusual="gap" aria-pressed="false">新旧房分化最大</button><button data-unusual="turn" aria-pressed="false">最近发生转向</button></div>
+    <p id="unusual-rule" class="unusual-rule"></p><div id="unusual-cards" class="unusual-cards"></div>
+    <details class="unusual-method"><summary>这些城市是怎么选出来的？</summary><p>“逆着多数方向”：某类住宅中，严格超过半数有效城市下跌时找上涨城市，超过半数上涨时找下跌城市；持平不算反向。“分化最大”：按新房减二手房涨跌幅的绝对值，列出前五城。“最近转向”：与前一个发布月份相比，同一指标由负转正或由正转负，零值不算转向；按变化绝对值排序，最多列出八城。这些是探索规则，不代表统计显著异常，也不能解释其成因。</p></details>
+  </section>
   <section class="overview-grid">
     <article class="panel scatter-panel" id="scatter-section">
       <div class="panel-top"><div><div class="section-kicker">01 / 城市截面</div><h2>一座城市，一个坐标</h2></div><span class="tag" id="scatter-tag">同比 · %</span></div>
@@ -44,6 +52,7 @@
       <div class="group-legend"><span><i class="line-swatch new"></i> 新房</span><span><i class="line-swatch resale"></i> 二手房</span></div>
       <div class="selection-cities"><h3 id="selection-list-title">当前新旧房差值最大的城市</h3><p class="micro">点击 + 加入下方趋势对比，最多五城。</p><div id="selected-list"></div></div>
       <p class="stat-note">城市等权中位数，不代表全国房价水平。<br>差值＝新房涨跌幅 − 二手房涨跌幅。</p>
+      <button id="inspect-selected" class="button inspect-selection" disabled>逐城放大查看框选城市 ↗</button>
     </aside>
   </section>
   <section class="panel trends-panel" id="trends-section">
@@ -65,6 +74,17 @@
 </main>
 <footer><span>同一座城，两种楼市 · 交互可视化作业</span><span>D3.js · 官方数据 · <a href="https://github.com/gabriellaXL/hw6-housing70" id="repo-link">源代码 ↗</a></span></footer>
 <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+<dialog id="city-detail" aria-labelledby="detail-heading">
+  <div class="detail-top"><div><div class="section-kicker">单城放大 / 与其余城市比较</div><h2 id="detail-heading"></h2></div><button id="detail-close" class="button" autofocus>关闭 ×</button></div>
+  <div class="detail-controls"><button id="detail-prev-city" class="button" aria-label="上一个城市">← 上一城</button><label class="select-label">城市 <select id="detail-city" aria-label="放大查看城市"></select></label><button id="detail-next-city" class="button" aria-label="下一个城市">下一城 →</button><span id="detail-candidate" class="micro"></span><label class="checkbox-label"><input type="checkbox" id="detail-zoom" checked> 放大纵轴和散点坐标</label></div>
+  <p id="detail-reason" class="detail-reason"></p>
+  <div id="detail-stats" class="detail-stats"></div>
+  <div class="detail-grid"><section class="detail-history"><h3>与多数城市的时间线放在一起看</h3><div class="segmented" role="group" aria-label="放大趋势内容"><button data-detail-type="new" aria-pressed="true">新房</button><button data-detail-type="resale" aria-pressed="false">二手房</button><button data-detail-type="gap" aria-pressed="false">新旧房差值</button></div><div id="detail-trend"></div><p class="detail-legend"><span id="detail-line-label"></span><span>┄ 其余城市中位数</span><span>▧ 其余城市中间 50% 范围</span></p></section><section><h3>它在这个月处于什么位置？</h3><div id="detail-scatter"></div><p class="micro">彩色点：当前城市；细线：它最近六个月的轨迹；灰点：其余城市。</p></section></div>
+  <p id="detail-scale-note" class="method-note"></p>
+  <div class="detail-month-controls"><button id="detail-month-prev" class="button">← 上个月</button><label for="detail-month">观察月份 <strong id="detail-month-label"></strong></label><input type="range" id="detail-month" min="0" aria-label="放大视图观察月份"><button id="detail-month-next" class="button">下个月 →</button></div>
+  <section class="detail-heat-section"><h3>单城月份热力图 <span class="micro">色阶与总览一致 · 可横向滚动 · 点击定位月份</span></h3><div class="detail-heat-scroll"><table id="detail-heat"></table></div></section>
+  <p class="method-note">比较组为其余 69 城中有有效数值的城市，城市等权；中间 50% 指第 25 至第 75 百分位，不是置信区间。2026 年 1 月的竖虚线标出基期及权数调整。同比是与去年同月比，环比是与上月比。</p>
+</dialog>
 <noscript><p>此作品需要启用 JavaScript 才能加载数据和交互图表。</p></noscript>
 </body>
 </html>
