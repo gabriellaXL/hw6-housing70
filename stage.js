@@ -65,7 +65,7 @@
     dots.interrupt().transition().duration(duration).ease(d3.easeCubicInOut).attr('cx',d=>pos(d,d.type)[0]).attr('cy',d=>pos(d,d.type)[1]).attr('r',d=>d.city===state.city?6:state.view==='split'?3:4).style('opacity',d=>d.type==='resale'&&state.view!=='split'?0:(d.city===state.city?1:.64)*alpha(d)).style('pointer-events',d=>d.type==='resale'&&state.view!=='split'?'none':'auto');
     dots.filter(d=>d.city===state.city).raise();
     const ring=svg.select('.rings').selectAll('circle').data(selected?[selected]:[]).join('circle').attr('class','active-ring');ring.interrupt().transition().duration(duration).attr('cx',d=>pos(d,'new')[0]).attr('cy',d=>pos(d,'new')[1]).attr('r',12);
-    const labels=data.filter(d=>d.city===state.city||(state.focus?top5.has(d.city):['上海','北京','深圳'].includes(d.city)));
+    const labelled=state.focus?new Set([...data].filter(d=>top5.has(d.city)).sort((a,b)=>Math.abs(b.gap)-Math.abs(a.gap)).slice(0,5).map(d=>d.city)):new Set(['上海','北京','深圳']);const labels=data.filter(d=>d.city===state.city||labelled.has(d.city));
     const placed=[];const labelData=labels.sort((a,b)=>pos(a,'new')[1]-pos(b,'new')[1]).map(d=>{const [px,py]=pos(d,'new');let ly=py-10;while(placed.some(l=>Math.abs(l.x-px)<55&&Math.abs(l.y-ly)<15))ly-=15;ly=Math.max(top+10,ly);placed.push({x:px,y:ly});return {...d,lx:state.view==='split'?px-12:px+10,ly};});
     svg.select('.labels').selectAll('.city-label').data(labelData,d=>d.city).join('text').attr('class',d=>`city-label${d.city===state.city?' active':''}`).attr('text-anchor',state.view==='split'?'end':'start').text(d=>d.city).interrupt().transition().duration(duration).attr('x',d=>d.lx).attr('y',d=>d.ly);
     const values=selected&&state.view==='split'?[{...selected,type:'new'},{...selected,type:'resale'}]:[];

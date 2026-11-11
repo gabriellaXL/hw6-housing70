@@ -21,6 +21,9 @@ try{
   await page.locator('[data-insight=converge]').click();await page.locator('#insight-from').selectOption('2026-01');
   check('absolute convergence distinguishes all four paths',await page.evaluate(()=>housingStage.insights.compute().bars.map(b=>b.n).join(',')==='24,23,5,1'));
   check('53 converging cities, not signed-gap decrease count',(await page.locator('.story-number').textContent()).startsWith('53'));
+  await page.locator('#insight-highlight').click();
+  check('large cohort highlights all members without label crowding',await page.evaluate(()=>housingStage.state.spotlight.length===53)&&await page.locator('#stage .labels .city-label').count()<=6);
+  await page.locator('#insights-open').click();
   await page.locator('#insight-path').selectOption('weaker');
   check('weakening-together path returns five cities',await page.locator('.story-city').count()===5);
   await page.locator('[data-insight=reversal]').click();await page.locator('#insight-kind').selectOption('resale');
