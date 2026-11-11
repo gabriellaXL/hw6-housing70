@@ -7,7 +7,7 @@ const browser = await chromium.launch({channel:'msedge',headless:true});
 const page = await browser.newPage({viewport:{width:1440,height:1100}});
 const errors = [], checks = [];
 page.on('pageerror',e=>errors.push(e.message));
-const base = process.env.TEST_URL || 'http://127.0.0.1:8766/';
+const base = new URL('classic.html',process.env.TEST_URL || 'http://127.0.0.1:8766/').href;
 await mkdir('test-results',{recursive:true});
 const check = (name,condition) => {assert.ok(condition,name);checks.push(name);};
 try {

@@ -5,8 +5,8 @@
   "description": "D3 linked views of official NBS housing price indices in 70 cities",
   "scripts": {
     "start": "python -m http.server 8766 --bind 127.0.0.1",
-    "test": "node tests/browser.mjs && node tests/explore.mjs",
-    "check": "node --check app.js && node --check explore.js"
+    "test": "node tests/stage.mjs && node tests/stage-insights.mjs && node tests/browser.mjs && node tests/explore.mjs",
+    "check": "node --check stage.js && node --check stage-insights.js && node --check app.js && node --check explore.js"
   },
   "devDependencies": {"@playwright/test": "1.56.1"}
 }

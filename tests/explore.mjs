@@ -6,7 +6,7 @@ const page=await browser.newPage({viewport:{width:1440,height:1100}});
 const checks=[],errors=[];
 page.on('pageerror',e=>errors.push(e.message));
 const check=(name,test)=>{assert.ok(test,name);checks.push(name);};
-const base=process.env.TEST_URL||'http://127.0.0.1:8766/';
+const base=new URL('classic.html',process.env.TEST_URL||'http://127.0.0.1:8766/').href;
 await mkdir('test-results',{recursive:true});
 try{
   await page.goto(base);await page.waitForFunction(()=>window.housingApp?.explorer);

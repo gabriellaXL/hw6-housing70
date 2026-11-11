@@ -19,14 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check JavaScript syntax
-        run: node --check app.js && node --check explore.js
+        run: npm run check
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Prepare static files
         run: |
           mkdir -p _site
-          cp index.html styles.css app.js explore.js report.md report.html README.md verification.md _site/
+          cp index.html stage.css stage.js stage-insights.css stage-insights.js classic.html styles.css app.js explore.js report.md report.html README.md verification.md _site/
           cp -r vendor data _site/
+          cp -r analysis _site/
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
