@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>70城 · 住房价格变化</title>
+  <meta name="description" content="交互探索70个大中城市的新房与二手房价格变化。">
+  <link rel="stylesheet" href="preview.css">
+  <script defer src="../vendor/d3.v7.min.js"></script><script defer src="preview.js"></script>
+</head>
+<body>
+  <header class="masthead"><a class="wordmark" href="./"><span class="brand-number">70<span>↗</span></span><span>城市住房价格<span class="brand-sub">中国 · 2024—2026</span></span></a><nav><span class="preview-label">新版设计预览</span><a href="../">原版页面 ↗</a><a href="#method">数据说明</a></nav></header>
+  <main>
+    <section class="intro"><div><div class="eyebrow">住房价格观察 / 国家统计局月度数据</div><h1>新房与二手房，正在分化吗？</h1><p>每个点是一座城市。选中它，看看两类住宅的价格如何变化。</p></div><div class="coverage"><span class="live-dot"></span><span id="coverage">正在读取数据</span></div></section>
+    <section class="controls" aria-label="观察条件">
+      <div class="date-group"><button id="prev" class="arrow" aria-label="上个月">←</button><span id="month-label" class="date">2026.09</span><button id="next" class="arrow" aria-label="下个月">→</button></div>
+      <div class="timeline"><button id="play" class="play" aria-label="播放月份">▶</button><span id="start-label">2024.01</span><input type="range" id="month" min="0" value="32" aria-label="观察月份"><span id="end-label">2026.09</span></div>
+      <div class="metric" role="group" aria-label="变化指标"><button data-metric="yoy" aria-pressed="true">同比</button><button data-metric="mom" aria-pressed="false">环比</button></div>
+      <form id="search-form" class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="8" r="5.5"></circle><path d="m12 12 5 5"></path></svg><label class="sr-only" for="city-search">搜索城市</label><input id="city-search" list="city-options" placeholder="查找城市" autocomplete="off"><datalist id="city-options"></datalist><button type="submit" aria-label="查看城市">↵</button></form>
+    </section>
+    <div id="status" role="status" aria-live="polite"></div>
+    <section class="workspace">
+      <article class="scatter-panel">
+        <div class="section-heading"><div><h2>70城价格分布</h2><p id="scatter-subtitle">同比涨跌幅，%</p></div><div class="scatter-key"><span><i class="key-dot"></i>城市</span><span><i class="key-dot active"></i>当前选择</span><button id="clear" hidden>清除框选 ×</button></div></div>
+        <div class="scatter-stage"><div class="market-summary" aria-label="本月概况"><div class="summary-title">这个月的70城</div><div class="summary-stat"><strong id="new-falling">—</strong><span>/ 70</span><p>新房价格下跌</p></div><div class="summary-stat"><strong id="resale-falling">—</strong><span>/ 70</span><p>二手房价格下跌</p></div><p id="opposite-summary" class="opposite-summary"></p></div><div id="scatter" class="scatter"></div></div>
+        <div class="scatter-footer"><span><span class="gesture">⌖</span> 点击查看城市 · 拖动框选比较</span><span>斜线表示两类住宅涨跌幅相同</span></div>
+        <div class="explore"><span>快速探索</span><button data-explore="opposite" aria-pressed="false">涨跌方向相反 <span>↗</span></button><button data-explore="gap" aria-pressed="false">新旧房差距最大 <span>↗</span></button><button data-explore="turn" aria-pressed="false">最近转向 <span>↗</span></button></div>
+      </article>
+      <aside class="detail-panel">
+        <div class="detail-eyebrow"><span id="detail-kicker">当前城市</span><span id="detail-period">2026.09</span></div>
+        <div class="city-heading"><h2 id="city-name">杭州</h2><button id="pin" class="pin">＋ 加入对比</button></div>
+        <div class="values"><div><span><i class="line-key new"></i>新房</span><strong id="new-value">—</strong></div><div><span><i class="line-key resale"></i>二手房</span><strong id="resale-value">—</strong></div><div class="gap-value"><span>两者差值</span><strong id="gap-value">—</strong></div></div>
+        <p id="city-insight" class="city-insight"></p>
+        <div class="history-heading"><h3 id="history-heading">历史走势</h3><span>新房 <i class="line-key new"></i> 二手房 <i class="line-key resale"></i></span></div>
+        <div id="city-trend" class="city-trend"></div>
+        <div class="rank-section"><div class="rank-heading"><h3 id="rank-heading">本月新旧房差距</h3><span id="rank-note">按绝对差值排序</span></div><div id="ranking"></div></div>
+      </aside>
+    </section>
+    <section class="compare-section">
+      <div class="section-heading"><div><h2>把几座城市放在一起看<span class="heading-count" id="compare-count"></span></h2><p>相同的时间与纵轴，比较不同城市的走势。</p></div><span class="legend"><i class="line-key new"></i>新房 <i class="line-key resale"></i>二手房</span></div>
+      <div id="comparisons" class="comparisons"></div>
+      <p class="chart-note">同比与上年同月比较，环比与上月比较。2026年1月虚线标记官方基期及权数调整。</p>
+    </section>
+    <section class="heat-section"><details id="heat-details"><summary><span><span class="heat-icon">▦</span><strong>70城的历史全景</strong><span class="summary-caption">查看各城市新旧房差值的月度变化</span></span><span class="expand-label">展开 <span>＋</span></span></summary><div class="heat-intro"><span>新房涨跌幅 − 二手房涨跌幅，百分点</span><span class="heat-key"><span>二手房更高</span><i></i><span>新房更高</span></span></div><div class="heat-scroll" tabindex="0" aria-label="70城月份热力图，可横向滚动"><table id="heatmap"><caption class="sr-only">各城市每月新房与二手房涨跌幅差值</caption></table></div><p class="chart-note">点击色块定位城市与月份。色阶以0为中心，跨月保持固定；灰色表示缺失。</p></details></section>
+    <footer id="method"><div><span class="footer-title">数据与口径</span><p>来源：国家统计局「70个大中城市商品住宅销售价格变动情况」。涨跌幅 = 官方指数 − 100；新旧房差值以百分点计。<br>城市等权统计不代表全国房价水平；图中不涉及绝对房价与政策因果判断。</p></div><div class="footer-links"><a href="../data/housing.json" download>下载数据 ↓</a><a href="../report.html">设计报告 ↗</a><a id="source-link" href="#method" target="_blank" rel="noopener">官方来源 ↗</a></div></footer>
+  </main><div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+</body></html>

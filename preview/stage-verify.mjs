@@ -1,0 +1,47 @@
+import {chromium} from '@playwright/test';
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+const b=await chromium.launch({channel:'msedge',headless:true});
+const p=await b.newPage({viewport:{width:1440,height:900}}),errors=[],checks=[];
+p.on('pageerror',e=>errors.push(e.message));
+const check=(name,v)=>{assert.ok(v,name);checks.push(name);};
+try{
+  await p.goto('http://127.0.0.1:8766/preview/?still=1');await p.waitForFunction(()=>window.housingStage);await p.waitForTimeout(1500);
+  check('70 real city connections and 140 endpoints',await p.locator('.connection').count()===70&&await p.locator('.data-dot').count()===140);
+  check('desktop fits a single screen',await p.evaluate(()=>document.documentElement.scrollHeight===innerHeight&&document.documentElement.scrollWidth===innerWidth));
+  check('correct Hangzhou values',await p.locator('#new-value').textContent()==='+1.8%');
+  const before=await p.locator('.data-dot[data-city="杭州"][data-type="new"]').getAttribute('cx');
+  await p.locator('[data-view=scatter]').click();await p.waitForTimeout(220);
+  const intermediate=await p.locator('.data-dot[data-city="杭州"][data-type="new"]').getAttribute('cx');
+  await p.waitForTimeout(1000);const after=await p.locator('.data-dot[data-city="杭州"][data-type="new"]').getAttribute('cx');
+  check('view change animates intermediate coordinates',before!==intermediate&&intermediate!==after);
+  check('same city identities survive morph',await p.locator('.data-dot').count()===140);
+  await p.locator('.data-dot[data-city="上海"][data-type="new"]').click();await p.waitForTimeout(700);
+  check('selection updates city and official values',await p.evaluate(()=>housingStage.state.city==='上海')&&(await p.locator('#new-value').textContent())==='+2.8%');
+  await p.locator('[data-view=trails]').click();await p.waitForTimeout(1700);
+  check('time trajectories contain actual month samples',await p.locator('.trail-dot').count()===12&&await p.locator('.trajectory').count()===70);
+  await p.locator('#focus-city').click();await p.waitForTimeout(700);
+  check('gap spotlight selects actual largest gap city',await p.evaluate(()=>housingStage.state.focus&&housingStage.state.city==='杭州'));
+  await p.locator('#month').fill('0');await p.waitForTimeout(450);
+  check('scrubbing changes date and data',await p.evaluate(()=>housingStage.state.month==='2024-01')&&await p.locator('#date-year').textContent()==='2024');
+  check('fixed coordinate domains persist',await p.evaluate(()=>housingStage.limits.yoy[0]===-18&&housingStage.limits.yoy[1]===8));
+  await p.locator('[data-metric=mom]').click();await p.waitForTimeout(1100);
+  check('metric switches active scales and labels',await p.evaluate(()=>housingStage.state.metric==='mom')&&(await p.locator('#axis-note').textContent()).includes('环比'));
+  await p.locator('#search-open').click();await p.locator('#city-search').fill('成都');await p.locator('#city-results button').click();await p.waitForTimeout(700);
+  check('search selects city and dismisses search',await p.evaluate(()=>housingStage.state.city==='成都'&&!document.querySelector('#search-dialog').open));
+  await p.locator('#history-open').click();
+  check('detail revealed only on demand',await p.locator('#history-dialog').isVisible()&&await p.locator('#history-chart .history-series').count()===2);
+  await p.getByRole('button',{name:'关闭时间线',exact:true}).click();
+  await p.locator('#play').click();await p.waitForTimeout(1450);await p.locator('#play').click();
+  check('playback advances real months and pauses',await p.evaluate(()=>housingStage.state.month!=='2024-01'&&!housingStage.state.playing));
+  await p.goto('http://127.0.0.1:8766/preview/?m=2026-09&city=杭州&view=split');await p.waitForFunction(()=>window.housingStage);await p.waitForTimeout(1500);
+  await mkdir('test-results',{recursive:true});await p.screenshot({path:'test-results/stage-split.png'});
+  await p.setViewportSize({width:390,height:844});await p.waitForTimeout(300);
+  check('mobile has no horizontal overflow',await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await p.screenshot({path:'test-results/stage-mobile.png',fullPage:true});
+  for(const view of ['scatter','trails']){await p.locator(`[data-view=${view}]`).click();await p.waitForTimeout(1600);check(`mobile ${view} usable`,await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
+  await p.emulateMedia({reducedMotion:'reduce'});await p.goto('http://127.0.0.1:8766/preview/');await p.waitForFunction(()=>window.housingStage);await p.waitForTimeout(2100);
+  check('reduced motion prevents automatic playback',await p.evaluate(()=>!housingStage.state.playing&&housingStage.state.month==='2026-09'));
+  check('no uncaught browser errors',errors.length===0);
+  await writeFile('test-results/stage-checks.json',JSON.stringify({checks,errors},null,2));console.log(`PASS ${checks.length} exhibition checks`);
+}finally{await b.close();}
