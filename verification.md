@@ -7,7 +7,7 @@
 - 唯一键无重复，每月城市集合一致，数值缺失 0。
 - 原始 HTML 快照 33 份，逐页 SHA-256 与官方链接保存在 `data/sources.json`。
 - 抽查 2024-01、2025-01、2026-01、2026-09 北京两类住宅的环比与同比；2026-01 原文包含基期、权数调整说明。
-- 7 项 Python 数据测试通过：完整面板、跨年表格、缺失语义、重复项、漏城、异常值及基期说明。
+- 8 项 Python 数据测试通过：完整面板、跨年表格、缺失语义、重复项、漏城、异常值、基期说明及全部原始快照哈希。
 
 ## 前端
 
@@ -21,7 +21,14 @@
 
 ## 部署
 
-目标平台：GitHub Pages。最终部署结果在发布完成后更新。
+- 平台：GitHub Pages，HTTPS 已启用。
+- 网页：https://gabriellaxl.github.io/hw6-housing70/
+- 报告：https://gabriellaxl.github.io/hw6-housing70/report.html
+- 源码：https://github.com/gabriellaXL/hw6-housing70
+- 首次部署工作流成功：[Actions 记录](https://github.com/gabriellaXL/hw6-housing70/actions/runs/42973838915)。
+- 2026-11-11 对已部署 HTTPS 网页重新运行全部 43 项浏览器检查，全部通过，浏览器未捕获未处理异常；本地及线上主要交互结果一致。
+- 发布前再次复核官方最新三页目录，最新正式数据仍为 2026-09，记录见 `data/latest-release-check.json`。
+- 原始快照禁用 Git 换行转换，保证仓库中的字节与来源清单 SHA-256 一致。
 
 ## 复现
 

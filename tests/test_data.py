@@ -1,5 +1,6 @@
 """Validate original table extraction, cross-year headers and missing semantics."""
 import copy
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -67,6 +68,12 @@ class DataTests(unittest.TestCase):
         compact = fetch.clean(text)
         self.assertIn('2025年作为新一轮对比基期', compact)
         self.assertIn('基本分类权数有所调整', compact)
+
+    def test_snapshot_provenance(self):
+        provenance = json.loads((ROOT / 'data/sources.json').read_text(encoding='utf-8'))
+        for source in provenance:
+            with self.subTest(month=source['month']):
+                self.assertEqual(hashlib.sha256((ROOT / source['snapshot']).read_bytes()).hexdigest(), source['sha256'])
 
 
 if __name__ == '__main__':

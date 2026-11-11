@@ -97,7 +97,7 @@ def process(source):
     month, url = source
     path = RAW / f'{month}.html'
     if not path.exists():
-        path.write_text(download(url), encoding='utf-8')
+        path.write_bytes(download(url).encode('utf-8'))
     html = path.read_text(encoding='utf-8')
     records, text = parse_month(html, month, url)
     note = re.search(r'按照统计制度规定.{0,250}', text)
