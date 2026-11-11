@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="以国家统计局70城官方数据，交互探索2024年以来新房与二手房价格变化及城市分化。">
+  <title>同一座城，两种楼市 · 70城住房价格观察</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%231c5557'/%3E%3Cpath d='M9 29V17l8-7 8 7v12M26 29V21l5-4 4 4v8' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="vendor/d3.v7.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+<header class="masthead"><a class="brand" href="./"><span class="brand-icon">▥</span> 城市价格观察 <span class="brand-en">HOUSING / 70</span></a><a href="#methodology" class="quiet-link">数据与方法 ↗</a></header>
+<main>
+  <section class="intro">
+    <div class="eyebrow">2024 — <span id="end-year">2026</span> / 中国 70 个大中城市</div>
+    <h1>同一座城，<span>两种楼市。</span></h1>
+    <p class="lede">新房与二手房，步调一致吗？<br class="mobile-break">从城市之间的分化，走进每座城的时间线。</p>
+    <div class="data-stamp"><i></i><span id="coverage">正在加载官方数据…</span><span class="stamp-divider">/</span><a id="latest-source" href="#sources">国家统计局 ↗</a></div>
+  </section>
+  <nav class="questions" aria-label="探索问题">
+    <button id="question-opposite"><span>01</span> 哪些城市涨跌方向不同？ <b>↗</b></button>
+    <button id="question-gap"><span>02</span> 哪些城市新旧房差距最大？ <b>↗</b></button>
+    <button id="question-city"><span>03</span> 我关注的城市经历了什么？ <b>↗</b></button>
+  </nav>
+  <section class="toolbar" aria-label="数据筛选">
+    <div class="month-control"><div class="control-heading"><label for="month">观察月份</label><strong id="month-label">—</strong></div><div class="time-inputs"><button id="prev" class="icon-button" aria-label="上个月">‹</button><button id="play" class="icon-button" aria-label="播放月份">▶</button><input id="month" type="range" min="0" value="0" aria-label="观察月份"><button id="next" class="icon-button" aria-label="下个月">›</button></div><div class="range-labels"><span>2024.01</span><span id="range-end">—</span></div></div>
+    <div class="metric-control"><label>变化指标</label><div class="segmented" role="group" aria-label="变化指标"><button data-metric="yoy" aria-pressed="true">同比</button><button data-metric="mom" aria-pressed="false">环比</button></div><small id="metric-help">与上年同月比较</small></div>
+    <div class="toolbar-actions"><button id="share" class="button">复制当前视图链接 ↗</button><button id="reset" class="text-button">全部重置</button></div>
+  </section>
+  <div id="status" role="status" aria-live="polite"></div>
+  <section class="overview-grid">
+    <article class="panel scatter-panel" id="scatter-section">
+      <div class="panel-top"><div><div class="section-kicker">01 / 城市截面</div><h2>一座城市，一个坐标</h2></div><span class="tag" id="scatter-tag">同比 · %</span></div>
+      <p class="instruction">拖动框选一组城市；悬停查看详情，点击城市加入对比。对比城市显示近六个月轨迹。</p>
+      <div id="scatter" class="scatter-chart"></div>
+      <div class="chart-foot"><span><i class="dot"></i> 70 城 <i class="dot outlined"></i> 对比城市</span><span>斜线：两类住宅变化相等</span></div>
+    </article>
+    <aside class="panel analysis-panel">
+      <div class="section-kicker">02 / 选区洞察</div><div class="selection-heading"><h2 id="selection-title">全体 70 城</h2><button id="clear-brush" class="text-button" disabled>清除框选</button></div>
+      <p class="instruction" id="selection-note">在左图框选，比较一组城市与其余城市。</p>
+      <div id="group-stats"></div>
+      <div class="group-legend"><span><i class="line-swatch new"></i> 新房</span><span><i class="line-swatch resale"></i> 二手房</span></div>
+      <div class="selection-cities"><h3 id="selection-list-title">当前新旧房差值最大的城市</h3><p class="micro">点击 + 加入下方趋势对比，最多五城。</p><div id="selected-list"></div></div>
+      <p class="stat-note">城市等权中位数，不代表全国房价水平。<br>差值＝新房涨跌幅 − 二手房涨跌幅。</p>
+    </aside>
+  </section>
+  <section class="panel trends-panel" id="trends-section">
+    <div class="panel-top"><div><div class="section-kicker">03 / 时间对比</div><h2>把变化放回时间里</h2></div><div class="group-legend"><span><i class="line-swatch new"></i> 新房</span><span><i class="line-swatch resale"></i> 二手房</span></div></div>
+    <p class="instruction">各图共享纵轴；移动鼠标读取月份，点击时间线定位月份。散点图坐标与趋势图纵轴跨月保持固定。</p>
+    <div class="comparison-controls"><div id="comparison-chips" aria-label="对比城市名单"></div><div class="search-wrap"><label class="sr-only" for="city-search">搜索城市</label><input id="city-search" type="search" placeholder="+ 搜索并添加城市" autocomplete="off" aria-controls="city-results"><div id="city-results"></div></div><span id="comparison-count" class="micro"></span></div>
+    <div id="trends" class="trend-grid"></div>
+    <p class="method-note"><span>口径提示 /</span> 2026 年 1 月起，官方改用 2025 年作为新一轮对比基期，并调整各城市基本分类权数；虚线标出调整月份。图中仅使用官方发布的环比、同比序列。</p>
+  </section>
+  <section class="panel heat-panel" id="heat-section">
+    <div class="panel-top"><div><div class="section-kicker">04 / 全景时间线</div><h2>70 座城市的冷暖</h2></div><span class="tag" id="heat-tag">33 个月</span></div>
+    <p class="instruction">点击色块定位城市与月份，并添加至趋势对比。城市标签固定，月份可横向滚动；悬停一行联动高亮其他视图。</p>
+    <div class="heat-controls"><div class="segmented" role="group" aria-label="热力图展示内容"><button data-heat="new" aria-pressed="false">新房</button><button data-heat="resale" aria-pressed="false">二手房</button><button data-heat="gap" aria-pressed="true">新房 − 二手房</button></div><label class="select-label">排序 <select id="sort"><option value="gap">当前月差值 ↓</option><option value="value">当前月涨跌幅 ↓</option><option value="original">官方城市顺序</option></select></label><label class="checkbox-label"><input id="focus" type="checkbox"> 只看框选城市</label></div>
+    <div class="heat-legend"><span id="legend-low"></span><div id="heat-gradient"></div><span id="legend-high"></span><span id="heat-unit">百分点</span><i class="missing-swatch"></i><span>缺失</span></div>
+    <div id="heat-scroll" class="heat-scroll" tabindex="0" aria-label="城市月份热力图，可滚动"><table id="heatmap"><caption class="sr-only">各城市各月住房价格变化</caption></table></div>
+    <p id="heat-empty" hidden class="empty">请先在散点图框选城市，或取消“只看框选城市”。</p>
+  </section>
+  <section class="methodology" id="methodology"><div><div class="section-kicker">数据与方法</div><h2>看见差异，也理解边界</h2></div><div class="method-columns"><p>数据来自国家统计局每月发布的“70 个大中城市商品住宅销售价格变动情况”表 1 与表 2，保留全市新建商品住宅与二手住宅总指数，不包含面积分类。<a href="data/housing.json" download>下载数据 JSON ↗</a></p><p>涨跌幅＝官方指数 − 100；差值单位为百分点。同比与上年同月比较，环比与上月比较。月度涨跌幅不相加，不推算绝对房价，也不据此识别政策效果。</p><p>同一指标下，散点图采用跨月份固定、等比例的横纵坐标，热力图色阶关于零对称且跨月固定。缺失数据灰显、趋势线断开。<a href="report.html">阅读设计与开发报告 ↗</a></p></div><details id="sources"><summary>查看逐月官方来源与数据核验</summary><p id="validation-summary"></p><div id="source-list"></div></details></section>
+</main>
+<footer><span>同一座城，两种楼市 · 交互可视化作业</span><span>D3.js · 官方数据 · <a href="https://github.com/gabriellaXL/hw6-housing70" id="repo-link">源代码 ↗</a></span></footer>
+<div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+<noscript><p>此作品需要启用 JavaScript 才能加载数据和交互图表。</p></noscript>
+</body>
+</html>

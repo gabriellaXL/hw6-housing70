@@ -1,0 +1,233 @@
+[
+  {
+    "month": "2024-01",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202402/t20240223_1947806.html",
+    "snapshot": "raw/2024-01.html",
+    "sha256": "7c930f7d566860ef39c99e8cfb0eb960a08148afc0fc67ebce1694a389476f7b",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-02",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202403/t20240322_1948125.html",
+    "snapshot": "raw/2024-02.html",
+    "sha256": "79014a56eb240e2b198911da84fcf58104659fb3e55ed953e6efcf1f331693c5",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-03",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202404/t20240416_1948557.html",
+    "snapshot": "raw/2024-03.html",
+    "sha256": "e4c36ff5596aba3c495fc33b82fbf6dd580c5662c90272296cb4208d0131f8c0",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-04",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202405/t20240517_1950386.html",
+    "snapshot": "raw/2024-04.html",
+    "sha256": "55a002dc4d1bf15941447b67294e42079dc1e31308c1ce5e4371bc01bf42fda5",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-05",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202406/t20240617_1954705.html",
+    "snapshot": "raw/2024-05.html",
+    "sha256": "3e9448e184c1abb8d3b77619b975488bb69e959a8e7d08ccae4500ac49042834",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-06",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202407/t20240715_1955602.html",
+    "snapshot": "raw/2024-06.html",
+    "sha256": "1d6cf63ce74c7a0be083eec2f247af02f10a4168d4f6efa2d3d4866d6e10bc6f",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-07",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202408/t20240815_1955978.html",
+    "snapshot": "raw/2024-07.html",
+    "sha256": "aabc801f761342e7f02373e7ddb4c4ac13ca0dd67a5231d9651c1fd2498bd4b9",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-08",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202409/t20240914_1956479.html",
+    "snapshot": "raw/2024-08.html",
+    "sha256": "e564f0cc71bf7c088c0f039afaf12836ff885728fff936fd82c52ae3343c0c4e",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-09",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202410/t20241018_1957035.html",
+    "snapshot": "raw/2024-09.html",
+    "sha256": "5df8fbfc3b794099c97a2abb0ec8dd7bede6adc4535a48e7eff0ac4d20678a49",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-10",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202411/t20241115_1957419.html",
+    "snapshot": "raw/2024-10.html",
+    "sha256": "b2ef94485cae066f51e70aa1f3dcb696c3029df224a367a2f8b2573af3b334eb",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-11",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202412/t20241216_1957755.html",
+    "snapshot": "raw/2024-11.html",
+    "sha256": "e8dc4efc46329e424049c8ce70e4792eca3b543c3ee4d035ff4bc12bee130ca1",
+    "methodology_note": null
+  },
+  {
+    "month": "2024-12",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202501/t20250117_1958323.html",
+    "snapshot": "raw/2024-12.html",
+    "sha256": "9b496afd12b9864c3e2c08e51b6efadf8666db230749d5ec0ba35e79971ca4bc",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-01",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202502/t20250219_1958761.html",
+    "snapshot": "raw/2025-01.html",
+    "sha256": "241bcafeeb9165b4206a336bd2577bcd87c236902b2f2deb66b2d05a235adea7",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-02",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202503/t20250317_1959009.html",
+    "snapshot": "raw/2025-02.html",
+    "sha256": "8fa91ccb8df6773d8c9c6b0f9a99b07ee7394f6b4c115195273beaa1321212e8",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-03",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202504/t20250416_1959311.html",
+    "snapshot": "raw/2025-03.html",
+    "sha256": "9d751b493578d692dc7374b337f0def76a1f6b9873d8f5f26b5d130afc07fb67",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-04",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202505/t20250519_1959852.html",
+    "snapshot": "raw/2025-04.html",
+    "sha256": "280c33cfda16569906da77ef8a2d112b040c48cb4b8d97826f9af65c4181fcaf",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-05",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202506/t20250616_1960163.html",
+    "snapshot": "raw/2025-05.html",
+    "sha256": "b618a3bb54036d22d1b1d883fd3e5163f0b86fbd998ca50de361f39d65c7fa86",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-06",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202507/t20250715_1960403.html",
+    "snapshot": "raw/2025-06.html",
+    "sha256": "4cc52080f20ef883432281a8eb8559f6869ed882669ea82166383244dc81e8fd",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-07",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202508/t20250815_1960781.html",
+    "snapshot": "raw/2025-07.html",
+    "sha256": "7bd6b46e19627c70b80f9258cd93dca4de2aab42c1711c6e922455ddbfb67f1a",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-08",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202509/t20250915_1961175.html",
+    "snapshot": "raw/2025-08.html",
+    "sha256": "72c3991df9479b40baf5bdf0e5377a1a90a86bec7fa1fa6a25164fe74746528a",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-09",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202510/t20251020_1961597.html",
+    "snapshot": "raw/2025-09.html",
+    "sha256": "89f6bf6d5e5ef9baaa1613ac970328b575de901da90359183dbb980277940048",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-10",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202511/t20251114_1961850.html",
+    "snapshot": "raw/2025-10.html",
+    "sha256": "ab60f645b024fb8cc6c69e67989807634e6d61aa8d3e6b8411b165e586edb3f9",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-11",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202512/t20251215_1962069.html",
+    "snapshot": "raw/2025-11.html",
+    "sha256": "26c4399de3b063f4e326aab2af4d7cc7e8e1ecb29456a03083d9d91b542a53f5",
+    "methodology_note": null
+  },
+  {
+    "month": "2025-12",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202601/t20260119_1962319.html",
+    "snapshot": "raw/2025-12.html",
+    "sha256": "23d2240b2e25c31c77d7b4bc690eabab549091b615428d1a691e55b6144e6deb",
+    "methodology_note": null
+  },
+  {
+    "month": "2026-01",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202602/t20260213_1962617.html",
+    "snapshot": "raw/2026-01.html",
+    "sha256": "ccc771ac402add9fd56684081ab6d378bba5a2544a37a91e56e1a998d0b9e0dc",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 1 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 城市 环比 同比 上月 =100 上年同月 =100 上月 =100 上年同月 =100 北　　京 99.7 97.6 唐　　山 99.6"
+  },
+  {
+    "month": "2026-02",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202603/t20260316_1962774.html",
+    "snapshot": "raw/2026-02.html",
+    "sha256": "65cd8a8e0dd61ef6d8f94eef00a185423a74a7f4549dcb4fc4e157fb8863694e",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 2 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 1-2 月平均 城市 环比 同比 1-2 月平均 上月 =100 上年同月 =100 上年同期 =100 上月 =100 上年同月 =10"
+  },
+  {
+    "month": "2026-03",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202604/t20260416_1963320.html",
+    "snapshot": "raw/2026-03.html",
+    "sha256": "e9df7346e66493441d608d5a3ad7f9b6c15270f8ca6d80d8d8b0261f08125cb5",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 3 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 1-3 月平均 城市 环比 同比 1-3 月平均 上月 =100 上年同月 =100 上年同期 =100 上月 =100 上年同月 =10"
+  },
+  {
+    "month": "2026-04",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202605/t20260518_1963715.html",
+    "snapshot": "raw/2026-04.html",
+    "sha256": "127a20f18e4056ded0c259650fcd7a8472dc74917723c943ef5ecee135410a94",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 4 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 1-4 月平均 城市 环比 同比 1-4 月平均 上月 =100 上年同月 =100 上年同期 =100 上月 =100 上年同月 =10"
+  },
+  {
+    "month": "2026-05",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202606/t20260616_1963946.html",
+    "snapshot": "raw/2026-05.html",
+    "sha256": "cce12379fe364b0a5b12ea6f99ebf9ba94af4eafeb52ed625a24f347c4a9fadc",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 5 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 1-5 月平均 城市 环比 同比 1-5 月平均 上月 =100 上年同月 =100 上年同期 =100 上月 =100 上年同月 =10"
+  },
+  {
+    "month": "2026-06",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202607/t20260715_1964115.html",
+    "snapshot": "raw/2026-06.html",
+    "sha256": "331db508e4caa11ce25e74ca5abaae3d87fd935f4ca7dfdbad719c1c4bb8b813",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 6 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 1-6 月平均 城市 环比 同比 1-6 月平均 上月 =100 上年同月 =100 上年同期 =100 上月 =100 上年同月 =10"
+  },
+  {
+    "month": "2026-07",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202608/t20260817_1965050.html",
+    "snapshot": "raw/2026-07.html",
+    "sha256": "9d0934168fd2e7d7d65cc1bd72af48da9a982ccaa8dec2c31aff65b245412892",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 7 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 1-7 月平均 城市 环比 同比 1-7 月平均 上月 =100 上年同月 =100 上年同期 =100 上月 =100 上年同月 =10"
+  },
+  {
+    "month": "2026-08",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965304.html",
+    "snapshot": "raw/2026-08.html",
+    "sha256": "347434f9e89352ce08ffe59141a6b582c9abd81aee6f47a0ccde4603e5c4598c",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 8 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 1-8 月平均 城市 环比 同比 1-8 月平均 上月 =100 上年同月 =100 上年同期 =100 上月 =100 上年同月 =10"
+  },
+  {
+    "month": "2026-09",
+    "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965609.html",
+    "snapshot": "raw/2026-09.html",
+    "sha256": "055638597160da1d4359aa41ded1ea92ab0d5470d75858dc7ceac4d791ea56f5",
+    "methodology_note": "按照统计制度规定， 2026 年 1 月起， 70 个大中城市房地产价格统计调查开始使用 2025 年作为新一轮对比基期，各城市基本分类权数有所调整，以更好反映住宅销售结构变动。经测算，本次基期轮换对 70 个大中城市商品住宅销售价格各月同比指数影响平均在 0.03 个百分点以内。 表 1 ： 2026 年 9 月 70 个大中城市新建商品住宅销售价格指数 城市 环比 同比 1-9 月平均 城市 环比 同比 1-9 月平均 上月 =100 上年同月 =100 上年同期 =100 上月 =100 上年同月 =10"
+  }
+]
